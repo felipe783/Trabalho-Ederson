@@ -8,11 +8,15 @@ public class Cadastro {
     private static final List<Usuario> usuarios = new ArrayList<>();
     private static int ultimoId = 0;
 
+    private static final String ADM_USER = "admin";
+    private static final String ADM_PASS = "1234";
+
     public static void main(String[] args) {
         try (Scanner input = new Scanner(System.in)) {
             boolean sair = false;
             while (!sair) {
-                // Imprime a função de menu com as opções
+
+                // Imprime a função de menu principal com as opções
                 mostrarMenu();
                 System.out.print("Escolha uma opção: ");
                 String opcao = input.nextLine().trim();
@@ -22,13 +26,7 @@ public class Cadastro {
                         cadastrarUsuario(input);
                         break;
                     case "2":
-                        listarUsuarios();
-                        break;
-                    case "3":
-                        buscarPorId(input);
-                        break;
-                    case "4":
-                        removerPorId(input);
+                        acessarAdm(input);
                         break;
                     case "0":
                         sair = true;
@@ -41,17 +39,74 @@ public class Cadastro {
         }
     }
 
-    // Função para o menu
+    // Função do menu principal
     private static void mostrarMenu() {
-        System.out.println("\n=== MENU ===");
+        System.out.println("\n=== MENU PRINCIPAL ===");
         System.out.println("1 - Cadastrar usuário");
-        System.out.println("2 - Listar usuários");
-        System.out.println("3 - Buscar usuário por ID");
-        System.out.println("4 - Remover usuário por ID");
+        System.out.println("2 - Sistema ADM");
         System.out.println("0 - Sair");
     }
 
-    // Função para cadastrar usuários
+    // Função do menu de administrador
+    private static void mostrarMenuADM() {
+        System.out.println("\n=== MENU ADM ===");
+        System.out.println("1 - Listar usuários");
+        System.out.println("2 - Buscar usuário por ID");
+        System.out.println("3 - Remover usuário por ID");
+        System.out.println("0 - Voltar");
+    }
+
+    // Verificação de acesso do sistema de adm
+    private static void acessarAdm(Scanner input) {
+        System.out.println("\n--- LOGIN ADM ---");
+
+        System.out.print("Usuário: ");
+        String usuario = input.nextLine().trim();
+
+        System.out.print("Senha: ");
+        String senha = input.nextLine().trim();
+
+        if (usuario.equals(ADM_USER) && senha.equals(ADM_PASS)) {
+            System.out.println("Login bem-sucedido! Acessando o menu ADM...");
+            adm(input);
+        } else {
+            System.out.println("Usuário ou senha incorretos. Acesso negado.");
+        }
+    }
+
+    /**
+     * Sistema de adm
+     */
+    private static void adm(Scanner input) {
+        boolean sairADM = false;
+        while (!sairADM) {
+            mostrarMenuADM();
+            System.out.print("Escolha uma opção: ");
+            String opcaoADM = input.nextLine().trim();
+
+            switch (opcaoADM) {
+                case "1":
+                    listarUsuarios();
+                    break;
+                case "2":
+                    buscarPorId(input);
+                    break;
+                case "3":
+                    removerPorId(input);
+                    break;
+                case "0":
+                    sairADM = true;
+                    System.out.println("Voltando ao menu principal...");
+                    break;
+                default:
+                    System.out.println("Opção inválida. Tente novamente.");
+            }
+        }
+    }
+
+    /**
+     *  Função para cadastrar usuários
+     */
     private static void cadastrarUsuario(Scanner input) {
         System.out.println("\n--- CADASTRO ---");
         try {
@@ -65,7 +120,6 @@ public class Cadastro {
             String senha = input.nextLine().trim();
 
             String cpf;
-
             // Verificador de CPF, funciona junto do package de ValidadorCPF
             while (true) {
                 System.out.print("CPF (somente números ou com pontuação): ");
@@ -104,7 +158,6 @@ public class Cadastro {
         }
     }
 
-
     private static void listarUsuarios() {
         System.out.println("\n--- LISTA DE USUÁRIOS ---");
         if (usuarios.isEmpty()) {
@@ -113,8 +166,7 @@ public class Cadastro {
         }
         for (Usuario u : usuarios) {
             // Formata o CPF para mostrar ao usuário
-            String cpfFormat;
-            cpfFormat = ValidadorCPF.formatCPF(u.getCpf());
+            String cpfFormat = ValidadorCPF.formatCPF(u.getCpf());
             System.out.println("ID: " + u.getId() +
                     " | Nome: " + u.getNome() +
                     " | Email: " + u.getEmail() +
@@ -138,6 +190,7 @@ public class Cadastro {
         }
     }
 
+    // Função para remover um cadastro pelo id
     private static void removerPorId(Scanner input) {
         System.out.print("Informe o ID do usuário a remover: ");
         String linha = input.nextLine().trim();
@@ -155,6 +208,7 @@ public class Cadastro {
         }
     }
 
+    // Função para encontrar cadastro pelo id
     private static Usuario encontrarPorId(int id) {
         for (Usuario u : usuarios) {
             if (u.getId() == id) return u;
