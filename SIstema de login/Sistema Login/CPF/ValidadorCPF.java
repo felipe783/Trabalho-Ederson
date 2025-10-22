@@ -1,16 +1,18 @@
+package CPF;
+
 public class ValidadorCPF {
 
     /**
      * Valida um CPF (apenas números).
-     * Aceita CPF com ou sem pontuação (pontos e traço) — os remove antes de validar.
+     * Aceita CPF com ou sem pontuação (pontos e traço) — mas os remove antes de validar.
      */
     public static boolean isValidCPF(String cpf) {
         if (cpf == null) return false;
 
-        // Remove tudo que não for dígito
+        // Remove tudo que não for dígito, no caso do cpf os pontos e traços
         cpf = cpf.replaceAll("\\D", "");
 
-        // Deve ter 11 dígitos
+        // Verifica se tem 11 dígitos
         if (cpf.length() != 11) return false;
 
         // Verifica sequências repetidas (ex: 00000000000, 11111111111, ...)
@@ -22,7 +24,7 @@ public class ValidadorCPF {
                 digits[i] = Integer.parseInt(String.valueOf(cpf.charAt(i)));
             }
 
-            // Calcula primeiro dígito verificador
+            // Calcula o primeiro dígito verificador
             int sum = 0;
             for (int i = 0; i < 9; i++) {
                 sum += digits[i] * (10 - i);
@@ -31,7 +33,7 @@ public class ValidadorCPF {
             int firstCheck = (remainder == 10) ? 0 : remainder;
             if (firstCheck != digits[9]) return false;
 
-            // Calcula segundo dígito verificador
+            // Calcula o segundo dígito verificador
             sum = 0;
             for (int i = 0; i < 10; i++) {
                 sum += digits[i] * (11 - i);
@@ -40,15 +42,15 @@ public class ValidadorCPF {
             int secondCheck = (remainder == 10) ? 0 : remainder;
             return secondCheck == digits[10];
 
+            // Caso o CPF seja inválido ele retorna falso para o isValidCPF e encerra a função
         } catch (NumberFormatException e) {
             return false;
         }
     }
 
-    /**
-     * Formata CPF adicionando pontos e traço (ex: 12345678909 -> 123.456.789-09).
-     * Se o CPF não tiver 11 dígitos, retorna o input original.
-     */
+    /** Formata CPF adicionando pontos e traço (ex: 12345678909 -> 123.456.789-09)
+     ** Se o CPF não tiver 11 dígitos, retorna o input original.
+     **/
     public static String formatCPF(String cpf) {
         if (cpf == null) return null;
         String onlyDigits = cpf.replaceAll("\\D", "");
