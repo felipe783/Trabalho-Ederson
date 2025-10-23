@@ -19,6 +19,15 @@ public class Quartos {
         this.qualidade=qualidade;
         this.preco=preco;
     }
+    public float getPreco(){
+        return preco;
+    }
+    public int getNumero(){
+        return numero;
+    }
+    public String getQualidade(){
+        return qualidade;
+    }
     /**Printa Bunitinho**/
     @Override
     public String toString(){
