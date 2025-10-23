@@ -1,4 +1,5 @@
 import CPF.ValidadorCPF;
+import FormatTelefone.Formatador;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,30 +83,23 @@ public class Cadastro {
         while (!sairADM) {
             mostrarMenuADM();
             System.out.print("Escolha uma opção: ");
-            String opcaoADM = input.nextLine().trim();
+            String opcao = input.nextLine().trim();
 
-            switch (opcaoADM) {
-                case "1":
-                    listarUsuarios();
-                    break;
-                case "2":
-                    buscarPorId(input);
-                    break;
-                case "3":
-                    removerPorId(input);
-                    break;
-                case "0":
+            switch (opcao) {
+                case "1" -> listarUsuarios();
+                case "2" -> buscarPorId(input);
+                case "3" -> removerPorId(input);
+                case "0" -> {
                     sairADM = true;
                     System.out.println("Voltando ao menu principal...");
-                    break;
-                default:
-                    System.out.println("Opção inválida. Tente novamente.");
+                }
+                default -> System.out.println("Opção inválida. Tente novamente.");
             }
         }
     }
 
     /**
-     *  Função para cadastrar usuários
+     *  Função para cadastrar usuarios
      */
     private static void cadastrarUsuario(Scanner input) {
         System.out.println("\n--- CADASTRO ---");
@@ -137,13 +131,33 @@ public class Cadastro {
                 }
             }
 
-            System.out.print("Telefone: ");
-            String telefone = input.nextLine().trim();
+            String telefone;
+            while (true) {
+                System.out.print("Telefone (somente números): ");
+                telefone = input.nextLine().trim();
+
+                // remove qualquer coisa que não seja número
+                String numeroLimpo = telefone.replaceAll("\\D", "");
+
+                // valida tamanho (10 = fixo, 11 = celular)
+                if (numeroLimpo.length() == 10 || numeroLimpo.length() == 11) {
+                    // formata o número antes de salvar
+                    telefone = Formatador.formatarTelefone(numeroLimpo);
+                    break;
+                } else {
+                    System.out.println("Telefone inválido. Deseja tentar novamente? (s/n)");
+                    String r = input.nextLine().trim().toLowerCase();
+                    if (!r.equals("s") && !r.equals("sim")) {
+                        System.out.println("Cadastro cancelado.");
+                        return;
+                    }
+                }
+                }
 
             System.out.print("Endereço: ");
             String endereco = input.nextLine().trim();
 
-            Usuario u = new Usuario(0, nome, email, senha, cpf, telefone, endereco);
+            Usuario u = new Usuario(0, nome, email, senha, ValidadorCPF.formatCPF(cpf), Formatador.formatarTelefone(telefone), endereco);
 
             int novoId = ++ultimoId;
             u.setId(novoId);
@@ -160,17 +174,18 @@ public class Cadastro {
 
     private static void listarUsuarios() {
         System.out.println("\n--- LISTA DE USUÁRIOS ---");
+
         if (usuarios.isEmpty()) {
             System.out.println("Nenhum usuário cadastrado.");
             return;
         }
+
         for (Usuario u : usuarios) {
-            // Formata o CPF para mostrar ao usuário
-            String cpfFormat = ValidadorCPF.formatCPF(u.getCpf());
             System.out.println("ID: " + u.getId() +
                     " | Nome: " + u.getNome() +
                     " | Email: " + u.getEmail() +
-                    " | CPF: " + cpfFormat);
+                    " | CPF: " + ValidadorCPF.formatCPF(u.getCpf()) +
+                    " | Telefone: " + Formatador.formatarTelefone(u.getTelefone()));
         }
     }
 
@@ -190,7 +205,7 @@ public class Cadastro {
         }
     }
 
-    // Função para remover um cadastro pelo id
+    // Função para remover um cadastro pelo 'id'
     private static void removerPorId(Scanner input) {
         System.out.print("Informe o ID do usuário a remover: ");
         String linha = input.nextLine().trim();
@@ -208,7 +223,7 @@ public class Cadastro {
         }
     }
 
-    // Função para encontrar cadastro pelo id
+    // Função para encontrar cadastro pelo 'id'
     private static Usuario encontrarPorId(int id) {
         for (Usuario u : usuarios) {
             if (u.getId() == id) return u;
