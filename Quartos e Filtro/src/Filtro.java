@@ -25,7 +25,10 @@ public class Filtro {
         return filtro_tipo;
     }
     public boolean matches(String[] filtro){
-
+        //Evita dar uma array vazio
+        if(filtro==null){
+            return true;
+        }
         return false;
     }
 }
