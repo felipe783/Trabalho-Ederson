@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Main {
+public class Main_FQ {
     public static Scanner input = new Scanner(System.in);
     public static void main(String[] args){
         //Cria o objeto de quartos pra exibir
@@ -21,12 +21,8 @@ public class Main {
         String[] resultado = Filtro.Selecao_Filtro(Filtro_Desejado);
 
         /**Aplicar o filtro**/
-
-        System.out.printf("Quartos disponiveis conforme o filtro:");
-        for(Quartos q : quartos){
-            /*if(q.Comparar(filtro_tipo)){
-                System.out.print(q);
-            }*/
-        }
+        System.out.printf("Quartos disponiveis conforme o filtro:\n");
+        //Entra com oq ele quer filtrar
+        Filtro.Comparar(resultado);
     }
 }
