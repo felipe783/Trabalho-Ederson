@@ -1,4 +1,5 @@
 public class Usuario {
+
     private int id;
     private String nome;
     private String email;
@@ -7,17 +8,18 @@ public class Usuario {
     private String telefone;
     private String endereco;
 
+    /** -------------------- CONSTRUTOR -------------------- **/
     public Usuario(int id, String nome, String email, String senha, String cpf, String telefone, String endereco) {
-        this.setId(id);
-        this.setNome(nome);
-        this.setEmail(email);
-        this.setSenha(senha);
-        this.setCpf(cpf);
-        this.setTelefone(telefone);
-        this.setEndereco(endereco);
+        setId(id);
+        setNome(nome);
+        setEmail(email);
+        setSenha(senha);
+        setCpf(cpf);
+        setTelefone(telefone);
+        setEndereco(endereco);
     }
 
-    // Getters e Setters (com validação)
+    /** -------------------- GETTERS E SETTERS -------------------- **/
     public int getId() {
         return id;
     }
