@@ -6,7 +6,6 @@ public class Quartos {
     private int numero;
     private String qualidade,preco;
 
-
     //Inicializa o objeto quarto(valores padrão)
     public Quartos(){
         this.numero=0;
@@ -19,6 +18,7 @@ public class Quartos {
         this.qualidade=qualidade;
         this.preco=preco;
     }
+    /**Os getters são pra pegar as variaveis private e poder usar**/
     public String getPreco(){
         return preco;
     }

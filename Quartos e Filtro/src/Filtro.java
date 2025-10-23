@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.text.Normalizer;
 
 public class Filtro {
     public static Scanner input = new Scanner(System.in);
@@ -24,27 +25,9 @@ public class Filtro {
         }
         return filtro_tipo;
     }
+    public static void Comparar(String[] filtro,String[] tipos){
 
-    public static void Comparar(String[] filtro){
-        int i;
         ArrayList<Quartos> quartos = Quartos.sampleList();
-        for(i=0;i<filtro.length;i++){
-            for(Quartos q : quartos ){
-                /**Os dois**/
-                if(q.getPreco().equals(filtro[i]) && q.getQualidade().equals(filtro[i])){
-                    System.out.printf("\n%-10d %-10s %-10s",q.getNumero(),q.getQualidade(),q.getPreco());
-                }
-                else{ /**Preço**/ //Ta certo
-                    if(q.getPreco().equals(filtro[i]) ){
-                        System.out.printf("\n%-10d %-10s %-10s",q.getNumero(),q.getQualidade(),q.getPreco());
-                    }
-                    else{ /**Qualidade**/
-                        if(q.getQualidade().toLowerCase().equals(filtro[i])){
-                            System.out.printf("\n%-10d %-10s %-10s",q.getNumero(),q.getQualidade(),q.getPreco());
-                        }
-                    }
-                }
-            }
-        }
     }
+
 }

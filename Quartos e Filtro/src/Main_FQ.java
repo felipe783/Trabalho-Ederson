@@ -14,15 +14,16 @@ public class Main_FQ {
         System.out.printf("\n--------------------------------------------------\n");
 
         /**Selecionar o tipo do filtro**/
-        System.out.println("Quais filtro voce deseja adicionar:");
+        System.out.println("Qual filtro voce deseja adicionar:");
         String[] Filtro_Desejado = input.nextLine().toLowerCase().split(" ");
 
         /**Selecionar quais seram os filtros**/
         String[] resultado = Filtro.Selecao_Filtro(Filtro_Desejado);
 
+
         /**Aplicar o filtro**/
         System.out.printf("Quartos disponiveis conforme o filtro:\n");
-        //Entra com oq ele quer filtrar
-        Filtro.Comparar(resultado);
+        //Entra com oq ele quer filtrar,e qual foi o selecionado
+        Filtro.Comparar(resultado, Filtro_Desejado);
     }
 }
