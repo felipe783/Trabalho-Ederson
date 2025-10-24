@@ -25,9 +25,36 @@ public class Filtro {
         }
         return filtro_tipo;
     }
-    public static void Comparar(String[] filtro,String[] tipos){
 
+    /**
+     *
+     String[] tipos=oq ele escolheu como filtro(basico,vip,119.90....)
+     String[] escolha= oq ele selecionou(0,1,2)
+     *
+     */
+    public static void Comparar(String[] tipos,String[] escolha){
         ArrayList<Quartos> quartos = Quartos.sampleList();
+        for(int i=0;i<tipos.length;i++){
+            for(Quartos q : quartos){
+                if(escolha[0].equals("0")){ //Preço
+                    if(q.getPreco().equals(tipos[i])){
+                        System.out.printf("\n%-10d %-10s %-10s",q.getNumero(),q.getQualidade(),q.getPreco());
+                    }
+                }
+                else{
+                    if(escolha[0].equals("1")){//Qualidade
+                        if(q.getQualidade().equalsIgnoreCase(tipos[i])){
+                            System.out.printf("\n%-10d %-10s %-10s",q.getNumero(),q.getQualidade(),q.getPreco());
+                        }
+                    }
+                    else{ //os Dois
+                        if(q.getQualidade().equalsIgnoreCase(tipos[i]) || q.getPreco().equalsIgnoreCase(tipos[i])){
+                            System.out.printf("\n%-10d %-10s %-10s",q.getNumero(),q.getQualidade(),q.getPreco());
+                        }
+                    }
+                }
+            }
+        }
     }
 
 }
