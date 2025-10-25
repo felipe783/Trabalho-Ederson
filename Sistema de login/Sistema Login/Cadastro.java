@@ -14,28 +14,26 @@ public class Cadastro {
 
     public static void main(String[] args) {
         try (Scanner input = new Scanner(System.in)) {
-            boolean sair = false;
-            while (!sair) {
+            exibirMenuPrincipal(input);
+        }
+    }
 
-                // Imprime a função de menu principal com as opções
-                mostrarMenu();
-                System.out.print("Escolha uma opção: ");
-                String opcao = input.nextLine().trim();
+    private static void exibirMenuPrincipal(Scanner input) {
+        boolean sair = false;
+        while (!sair) {
+            mostrarMenu();
+            System.out.print("Escolha uma opção: ");
+            String opcao = input.nextLine().trim();
 
-                switch (opcao) {
-                    case "1":
-                        cadastrarUsuario(input);
-                        break;
-                    case "2":
-                        acessarAdm(input);
-                        break;
-                    case "0":
-                        sair = true;
-                        System.out.println("Saindo...");
-                        break;
-                    default:
-                        System.out.println("Opção inválida. Tente novamente.");
+            switch (opcao) {
+                case "1" -> cadastrarUsuario(input);
+                case "2" -> acessarSite(input);
+                case "3" -> acessarAdm(input);
+                case "0" -> {
+                    sair = true;
+                    System.out.println("Saindo...");
                 }
+                default -> System.out.println("Opção inválida. Tente novamente.");
             }
         }
     }
@@ -67,13 +65,50 @@ public class Cadastro {
         System.out.print("Senha: ");
         String senha = input.nextLine().trim();
 
-        if (usuario.equals(ADM_USER) && senha.equals(ADM_PASS)) {
+        if (autenticarAdm(usuario, senha)) {
             System.out.println("Login bem-sucedido! Acessando o menu ADM...");
             adm(input);
         } else {
             System.out.println("Usuário ou senha incorretos. Acesso negado.");
         }
     }
+
+    // Verifica se o usuário está cadastrado e acessa o site
+    private static void acessarSite(Scanner input) {
+        System.out.println("\n--- LOGIN SITE ---");
+
+        System.out.print("Nome de usuário: ");
+        String nome = input.nextLine().trim();
+
+        System.out.print("Senha: ");
+        String senha = input.nextLine().trim();
+
+        if (autenticadorLogin(nome, senha)) {
+            System.out.println("Login bem-sucedido! Bem-vindo, " + nome + "!");
+        } else {
+            System.out.println("Usuário ou senha incorretos.");
+        }
+    }
+
+    /**
+     *     Verificador de acesso de adm
+     */
+
+    private static boolean autenticarAdm(String usuario, String senha) {
+        return ADM_USER.equals(usuario) && ADM_PASS.equals(senha);
+    }
+
+    /**
+     * Verficador de acesso ao site
+     */
+
+    private static boolean autenticadorLogin(String usuario, String senha) {
+        for (Usuario u : usuarios) {
+            if(u.getNome().equals(usuario) && u.getSenha().equals(senha)) {}
+
+        }
+    }
+
 
     /**
      * Sistema de adm
@@ -105,7 +140,7 @@ public class Cadastro {
         System.out.println("\n--- CADASTRO ---");
         try {
             System.out.print("Nome: ");
-            String nome = input.nextLine().trim();
+            String nome = input.nextLine();
 
             System.out.print("Email: ");
             String email = input.nextLine();
@@ -184,7 +219,6 @@ public class Cadastro {
             System.out.println("ID: " + u.getId() +
                     " | Nome: " + u.getNome() +
                     " | Email: " + u.getEmail() +
-                    " | CPF: " + ValidadorCPF.formatCPF(u.getCpf()) +
                     " | Telefone: " + Formatador.formatarTelefone(u.getTelefone()));
         }
     }

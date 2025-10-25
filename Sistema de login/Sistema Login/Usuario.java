@@ -8,7 +8,7 @@ public class Usuario {
     private String telefone;
     private String endereco;
 
-    /** -------------------- CONSTRUTOR -------------------- **/
+    /** --- CONSTRUTOR --- **/
     public Usuario(int id, String nome, String email, String senha, String cpf, String telefone, String endereco) {
         setId(id);
         setNome(nome);
@@ -19,7 +19,7 @@ public class Usuario {
         setEndereco(endereco);
     }
 
-    /** -------------------- GETTERS E SETTERS -------------------- **/
+    /** --- GETTERS E SETTERS --- **/
     public int getId() {
         return id;
     }
