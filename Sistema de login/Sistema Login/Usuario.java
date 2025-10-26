@@ -1,5 +1,10 @@
-public class Usuario {
+import java.io.Serializable;
 
+public class Usuario implements Serializable {
+
+    // =============================
+    //           Atributos
+    // =============================
     private int id;
     private String nome;
     private String email;
@@ -8,7 +13,9 @@ public class Usuario {
     private String telefone;
     private String endereco;
 
-    /** --- CONSTRUTOR --- **/
+    // =============================
+    //           Construtor
+    // =============================
     public Usuario(int id, String nome, String email, String senha, String cpf, String telefone, String endereco) {
         setId(id);
         setNome(nome);
@@ -19,15 +26,15 @@ public class Usuario {
         setEndereco(endereco);
     }
 
-    /** --- GETTERS E SETTERS --- **/
+    // =============================
+    //       Getters e Setters
+    // =============================
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
-        if (id < 0) {
-            throw new IllegalArgumentException("ID não pode ser negativo.");
-        }
+        if (id < 0) throw new IllegalArgumentException("ID não pode ser negativo.");
         this.id = id;
     }
 
@@ -36,9 +43,7 @@ public class Usuario {
     }
 
     public void setNome(String nome) {
-        if (nome == null || nome.isBlank()) {
-            throw new IllegalArgumentException("O nome não pode estar vazio.");
-        }
+        if (nome == null || nome.isBlank()) throw new IllegalArgumentException("O nome não pode estar vazio.");
         this.nome = nome.trim();
     }
 
@@ -47,9 +52,8 @@ public class Usuario {
     }
 
     public void setEmail(String email) {
-        if (email == null || email.isBlank() || !email.contains("@") || !email.contains(".")) {
+        if (email == null || email.isBlank() || !email.contains("@") || !email.contains("."))
             throw new IllegalArgumentException("Email inválido.");
-        }
         this.email = email;
     }
 
@@ -58,9 +62,8 @@ public class Usuario {
     }
 
     public void setSenha(String senha) {
-        if (senha == null || senha.length() < 6) {
+        if (senha == null || senha.length() < 6)
             throw new IllegalArgumentException("A senha deve ter pelo menos 6 caracteres.");
-        }
         this.senha = senha;
     }
 
@@ -77,9 +80,7 @@ public class Usuario {
     }
 
     public void setTelefone(String telefone) {
-        if (telefone == null) {
-            throw new IllegalArgumentException("Telefone inválido");
-        }
+        if (telefone == null) throw new IllegalArgumentException("Telefone inválido");
         this.telefone = telefone;
     }
 
@@ -88,12 +89,14 @@ public class Usuario {
     }
 
     public void setEndereco(String endereco) {
-        if (endereco == null || endereco.isBlank()) {
+        if (endereco == null || endereco.isBlank())
             throw new IllegalArgumentException("O endereço não pode estar vazio.");
-        }
         this.endereco = endereco;
     }
 
+    // =============================
+    //           toString
+    // =============================
     @Override
     public String toString() {
         return "Usuario{" +

@@ -1,24 +1,31 @@
 import CPF.ValidadorCPF;
 import FormatTelefone.Formatador;
-import ListaUsuarios.GerenciadorDeArquivos;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class Cadastro {
-    private static List<Usuario> usuarios = GerenciadorDeArquivos.carregarUsuarios();
-    private static int ultimoId = 0;
+    // =============================
+    //    Constantes e atributos
+    // =============================
+    private static final List<Usuario> usuarios = new ArrayList<>();
+    private static int ultimoId = GerenciadorDeArquivos.carregarUsuarios(usuarios);
 
     private static final String ADM_USER = "admin";
     private static final String ADM_PASS = "1234";
 
+    // =============================
+    //              MAIN
+    // =============================
     public static void main(String[] args) {
         try (Scanner input = new Scanner(System.in)) {
             exibirMenuPrincipal(input);
         }
     }
 
+    // =============================
+    //         Menu Principal
+    // =============================
     private static void exibirMenuPrincipal(Scanner input) {
         boolean sair = false;
         while (!sair) {
@@ -32,6 +39,7 @@ public class Cadastro {
                 case "3" -> acessarAdm(input);
                 case "0" -> {
                     sair = true;
+                    GerenciadorDeArquivos.salvarUsuarios(usuarios, ultimoId);
                     System.out.println("Saindo...");
                 }
                 default -> System.out.println("Opção inválida. Tente novamente.");
@@ -39,7 +47,6 @@ public class Cadastro {
         }
     }
 
-    // Função do menu principal
     private static void mostrarMenu() {
         System.out.println("\n=== MENU PRINCIPAL ===");
         System.out.println("1 - Cadastrar usuário");
@@ -48,7 +55,9 @@ public class Cadastro {
         System.out.println("0 - Sair");
     }
 
-    // Função do menu de administrador
+    // =============================
+    //            Menu ADM
+    // =============================
     private static void mostrarMenuADM() {
         System.out.println("\n=== MENU ADM ===");
         System.out.println("1 - Listar usuários");
@@ -57,69 +66,6 @@ public class Cadastro {
         System.out.println("0 - Voltar");
     }
 
-    // Verificação de acesso do sistema de adm
-    private static void acessarAdm(Scanner input) {
-        System.out.println("\n--- LOGIN ADM ---");
-
-        System.out.print("Usuário: ");
-        String usuario = input.nextLine().trim();
-
-        System.out.print("Senha: ");
-        String senha = input.nextLine().trim();
-
-        if (autenticarAdm(usuario, senha)) {
-            System.out.println("Login bem-sucedido! Acessando o menu ADM...");
-            adm(input);
-        } else {
-            System.out.println("Usuário ou senha incorretos. Acesso negado.");
-        }
-    }
-
-    // Verifica se o usuário está cadastrado e acessa o site
-    private static void acessarSite(Scanner input) {
-        System.out.println("\n--- LOGIN SITE ---");
-
-        // Verifica se há usuários cadastrados antes de tentar logar
-        if (usuarios.isEmpty()) {
-            System.out.println("Nenhum usuário cadastrado. Cadastre-se primeiro!");
-            return;
-        }
-
-        System.out.print("Nome de usuário: ");
-        String nome = input.nextLine().trim();
-
-        System.out.print("Senha: ");
-        String senha = input.nextLine().trim();
-
-        if (autenticadorLogin(nome, senha)) {
-            System.out.println("Login bem-sucedido! Bem-vindo, " + nome + "!");
-        } else {
-            System.out.println("Usuário ou senha incorretos.");
-        }
-    }
-
-    /**
-     *     Verificador de acesso de adm
-     */
-    private static boolean autenticarAdm(String usuario, String senha) {
-        return ADM_USER.equals(usuario) && ADM_PASS.equals(senha);
-    }
-
-    /**
-     * Verficador de acesso ao site
-     */
-    private static boolean autenticadorLogin(String usuario, String senha) {
-        for (Usuario u : usuarios) {
-            if (u.getNome().equalsIgnoreCase(usuario) && u.getSenha().equals(senha)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Sistema de adm
-     */
     private static void adm(Scanner input) {
         boolean sairADM = false;
         while (!sairADM) {
@@ -140,37 +86,124 @@ public class Cadastro {
         }
     }
 
-    /**
-     *  Função para cadastrar usuarios
-     */
+    // =============================
+    //     Menu Site / Hospedagem
+    // =============================
+    private static void mostrarMenuHospedagem() {
+        System.out.println("\n=== MENU HOSPEDAGEM ===");
+        System.out.println("1 - Quartos Disponíveis");
+        System.out.println("2 - Reservas");
+        System.out.println("3 - Cancelar Reservas");
+        System.out.println("0 - Voltar");
+    }
+
+    private static void site(Scanner input) {
+        boolean sair = false;
+        mostrarMenuHospedagem();
+        while (!sair) {
+            System.out.print("Escolha uma opção: ");
+            String opcao = input.nextLine().trim();
+
+            if (opcao.equals("0")) {
+                sair = true;
+            }
+            /*switch (opcao) {
+                case "1" -> quartos(input);
+                case "2" -> reservas(input);
+                case "3" -> cancelarReservas(input);
+                case "0" -> {
+                    sair = true;
+                    GerenciadorDeArquivos.salvarUsuarios(usuarios, ultimoId);
+                    System.out.println("Saindo...");
+                }
+                default -> System.out.println("Opção inválida. Tente novamente.");
+            }*/
+        }
+    }
+
+    // =============================
+    //         Autenticação
+    // =============================
+    private static void acessarAdm(Scanner input) {
+        System.out.println("\n--- LOGIN ADM ---");
+
+        System.out.print("Usuário: ");
+        String usuario = input.nextLine().trim();
+
+        System.out.print("Senha: ");
+        String senha = input.nextLine().trim();
+
+        if (autenticarAdm(usuario, senha)) {
+            System.out.println("Login bem-sucedido! Acessando o menu ADM...");
+            adm(input);
+        } else {
+            System.out.println("Usuário ou senha incorretos. Acesso negado.");
+        }
+    }
+
+    private static boolean autenticarAdm(String usuario, String senha) {
+        return ADM_USER.equals(usuario) && ADM_PASS.equals(senha);
+    }
+
+    private static void acessarSite(Scanner input) {
+        System.out.println("\n--- LOGIN SITE ---");
+
+        if (usuarios.isEmpty()) {
+            System.out.println("Nenhum usuário cadastrado. Cadastre-se primeiro!");
+            return;
+        }
+
+        System.out.print("Nome de usuário: ");
+        String nome = input.nextLine().trim();
+
+        System.out.print("Senha: ");
+        String senha = input.nextLine().trim();
+
+        if (autenticadorLogin(nome, senha)) {
+            System.out.println("Login bem-sucedido! Bem-vindo/a, " + nome + "!");
+            site(input);
+        } else {
+            System.out.println("Usuário ou senha incorretos.");
+        }
+    }
+
+    private static boolean autenticadorLogin(String usuario, String senha) {
+        for (Usuario u : usuarios) {
+            if (u.getNome().equalsIgnoreCase(usuario) && u.getSenha().equals(senha)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // =============================
+    //      Cadastro de Usuário
+    // =============================
     private static void cadastrarUsuario(Scanner input) {
         System.out.println("\n--- CADASTRO ---");
         try {
             System.out.print("Nome: ");
-            String nome = input.nextLine();
+            String nome = input.nextLine().trim();
 
             System.out.print("Email: ");
-            String email = input.nextLine();
+            String email = input.nextLine().trim();
 
             System.out.print("Senha: ");
             String senha = input.nextLine().trim();
-
-            // Bloqueia senha vazia
             if (senha.isEmpty()) {
                 System.out.println("A senha não pode ser vazia. Cadastro cancelado.");
                 return;
             }
 
             String cpf;
-            // Verificador de CPF, funciona junto do package de ValidadorCPF
             while (true) {
-                System.out.print("CPF (somente números ou com pontuação): ");
+                System.out.print("CPF (somente números ou pontuação): ");
                 cpf = input.nextLine().trim();
                 if (ValidadorCPF.isValidCPF(cpf)) {
                     cpf = cpf.replaceAll("\\D", "");
                     break;
                 } else {
-                    System.out.println("CPF inválido. Deseja tentar novamente? (s/n)");
+                    System.out.println("CPF inválido. Tentar novamente? (s/n)");
                     String r = input.nextLine().trim().toLowerCase();
                     if (!r.equals("s") && !r.equals("sim")) {
                         System.out.println("Cadastro cancelado.");
@@ -183,17 +216,12 @@ public class Cadastro {
             while (true) {
                 System.out.print("Telefone (somente números): ");
                 telefone = input.nextLine().trim();
-
-                // remove qualquer coisa que não seja número
                 String numeroLimpo = telefone.replaceAll("\\D", "");
-
-                // valida tamanho (10 = fixo, 11 = celular)
                 if (numeroLimpo.length() == 10 || numeroLimpo.length() == 11) {
-                    // formata o número antes de salvar
                     telefone = Formatador.formatarTelefone(numeroLimpo);
                     break;
                 } else {
-                    System.out.println("Telefone inválido. Deseja tentar novamente? (s/n)");
+                    System.out.println("Telefone inválido. Tentar novamente? (s/n)");
                     String r = input.nextLine().trim().toLowerCase();
                     if (!r.equals("s") && !r.equals("sim")) {
                         System.out.println("Cadastro cancelado.");
@@ -205,12 +233,13 @@ public class Cadastro {
             System.out.print("Endereço: ");
             String endereco = input.nextLine().trim();
 
-            // Cria e adiciona novo usuário
             Usuario u = new Usuario(0, nome, email, senha, ValidadorCPF.formatCPF(cpf), telefone, endereco);
             int novoId = ++ultimoId;
             u.setId(novoId);
+
             usuarios.add(u);
-            GerenciadorDeArquivos.salvarUsuarios(usuarios);
+            GerenciadorDeArquivos.salvarUsuarios(usuarios, ultimoId);
+
             System.out.println("Usuário cadastrado com sucesso! ID = " + novoId);
 
         } catch (IllegalArgumentException e) {
@@ -219,6 +248,9 @@ public class Cadastro {
         }
     }
 
+    // =============================
+    //  Operações de Administração
+    // =============================
     private static void listarUsuarios() {
         System.out.println("\n--- LISTA DE USUÁRIOS ---");
 
@@ -231,7 +263,6 @@ public class Cadastro {
             System.out.println("ID: " + u.getId() +
                     " | Nome: " + u.getNome() +
                     " | Email: " + u.getEmail() +
-                    " | CPF: " + ValidadorCPF.formatCPF(u.getCpf()) +
                     " | Telefone: " + u.getTelefone());
         }
     }
@@ -252,7 +283,6 @@ public class Cadastro {
         }
     }
 
-    // Função para remover um cadastro pelo 'id'
     private static void removerPorId(Scanner input) {
         System.out.print("Informe o ID do usuário a remover: ");
         String linha = input.nextLine().trim();
@@ -261,21 +291,34 @@ public class Cadastro {
             Usuario u = encontrarPorId(id);
             if (u == null) {
                 System.out.println("Usuário não encontrado.");
-            } else {
-                usuarios.remove(u);
-                GerenciadorDeArquivos.salvarUsuarios(usuarios);
-                System.out.println("Usuário com ID " + id + " removido.");
+                return;
             }
+
+            usuarios.remove(u);
+            System.out.println("Usuário com ID " + id + " removido.");
+
+            atualizarUltimoId();
+            GerenciadorDeArquivos.salvarUsuarios(usuarios, ultimoId);
+
         } catch (NumberFormatException e) {
             System.out.println("ID inválido.");
         }
     }
 
-    // Função para encontrar cadastro pelo 'id'
     private static Usuario encontrarPorId(int id) {
         for (Usuario u : usuarios) {
             if (u.getId() == id) return u;
         }
         return null;
+    }
+
+    private static void atualizarUltimoId() {
+        int maxId = 0;
+        for (Usuario u : usuarios) {
+            if (u.getId() > maxId) {
+                maxId = u.getId();
+            }
+        }
+        ultimoId = maxId;
     }
 }
