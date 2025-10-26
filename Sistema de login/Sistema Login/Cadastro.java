@@ -1,12 +1,13 @@
 import CPF.ValidadorCPF;
 import FormatTelefone.Formatador;
+import ListaUsuarios.GerenciadorDeArquivos;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class Cadastro {
-    private static final List<Usuario> usuarios = new ArrayList<>();
+    private static List<Usuario> usuarios = GerenciadorDeArquivos.carregarUsuarios();
     private static int ultimoId = 0;
 
     private static final String ADM_USER = "admin";
@@ -42,7 +43,8 @@ public class Cadastro {
     private static void mostrarMenu() {
         System.out.println("\n=== MENU PRINCIPAL ===");
         System.out.println("1 - Cadastrar usuário");
-        System.out.println("2 - Sistema ADM");
+        System.out.println("2 - Acessar o site");
+        System.out.println("3 - Sistema ADM");
         System.out.println("0 - Sair");
     }
 
@@ -77,6 +79,12 @@ public class Cadastro {
     private static void acessarSite(Scanner input) {
         System.out.println("\n--- LOGIN SITE ---");
 
+        // Verifica se há usuários cadastrados antes de tentar logar
+        if (usuarios.isEmpty()) {
+            System.out.println("Nenhum usuário cadastrado. Cadastre-se primeiro!");
+            return;
+        }
+
         System.out.print("Nome de usuário: ");
         String nome = input.nextLine().trim();
 
@@ -93,7 +101,6 @@ public class Cadastro {
     /**
      *     Verificador de acesso de adm
      */
-
     private static boolean autenticarAdm(String usuario, String senha) {
         return ADM_USER.equals(usuario) && ADM_PASS.equals(senha);
     }
@@ -101,14 +108,14 @@ public class Cadastro {
     /**
      * Verficador de acesso ao site
      */
-
     private static boolean autenticadorLogin(String usuario, String senha) {
         for (Usuario u : usuarios) {
-            if(u.getNome().equals(usuario) && u.getSenha().equals(senha)) {}
-
+            if (u.getNome().equalsIgnoreCase(usuario) && u.getSenha().equals(senha)) {
+                return true;
+            }
         }
+        return false;
     }
-
 
     /**
      * Sistema de adm
@@ -147,6 +154,12 @@ public class Cadastro {
 
             System.out.print("Senha: ");
             String senha = input.nextLine().trim();
+
+            // Bloqueia senha vazia
+            if (senha.isEmpty()) {
+                System.out.println("A senha não pode ser vazia. Cadastro cancelado.");
+                return;
+            }
 
             String cpf;
             // Verificador de CPF, funciona junto do package de ValidadorCPF
@@ -187,18 +200,17 @@ public class Cadastro {
                         return;
                     }
                 }
-                }
+            }
 
             System.out.print("Endereço: ");
             String endereco = input.nextLine().trim();
 
-            Usuario u = new Usuario(0, nome, email, senha, ValidadorCPF.formatCPF(cpf), Formatador.formatarTelefone(telefone), endereco);
-
+            // Cria e adiciona novo usuário
+            Usuario u = new Usuario(0, nome, email, senha, ValidadorCPF.formatCPF(cpf), telefone, endereco);
             int novoId = ++ultimoId;
             u.setId(novoId);
-
             usuarios.add(u);
-
+            GerenciadorDeArquivos.salvarUsuarios(usuarios);
             System.out.println("Usuário cadastrado com sucesso! ID = " + novoId);
 
         } catch (IllegalArgumentException e) {
@@ -219,7 +231,8 @@ public class Cadastro {
             System.out.println("ID: " + u.getId() +
                     " | Nome: " + u.getNome() +
                     " | Email: " + u.getEmail() +
-                    " | Telefone: " + Formatador.formatarTelefone(u.getTelefone()));
+                    " | CPF: " + ValidadorCPF.formatCPF(u.getCpf()) +
+                    " | Telefone: " + u.getTelefone());
         }
     }
 
@@ -250,6 +263,7 @@ public class Cadastro {
                 System.out.println("Usuário não encontrado.");
             } else {
                 usuarios.remove(u);
+                GerenciadorDeArquivos.salvarUsuarios(usuarios);
                 System.out.println("Usuário com ID " + id + " removido.");
             }
         } catch (NumberFormatException e) {
