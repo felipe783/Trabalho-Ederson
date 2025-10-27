@@ -4,7 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dec73cc3-c72d-4285-be84-2275ff15ce43" name="Changes" comment="" />
+    <list default="true" id="dec73cc3-c72d-4285-be84-2275ff15ce43" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/01.Hellow World.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Quarto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Quarto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Reserva.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SistemaReserva.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Usuario.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Usuario.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ValorReserva.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ValorReserva.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -30,10 +39,13 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.SistemaReserva.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "git-widget-placeholder": "master",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "Gustavo",
     "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
     "node.js.detected.package.eslint": "true",
@@ -42,6 +54,9 @@
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "onboarding.tips.debug.path": "C:/Users/gusta/IdeaProjects/SistemaHotel/src/Main.java",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.0",
     "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable",
     "to.speed.mode.migration.done": "true",
     "vue.rearranger.settings.migration": "true"
@@ -70,7 +85,8 @@
       <workItem from="1761178656093" duration="1358000" />
       <workItem from="1761318411278" duration="2267000" />
       <workItem from="1761413743635" duration="727000" />
-      <workItem from="1761499159090" duration="2294000" />
+      <workItem from="1761499159090" duration="2898000" />
+      <workItem from="1761515062707" duration="2729000" />
     </task>
     <servers />
   </component>

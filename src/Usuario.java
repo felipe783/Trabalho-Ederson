@@ -7,7 +7,7 @@ public class Usuario {
         this.nome = nome;
     }
 
-    public void reservarQuarto(QuartoID quarto){
+    public void reservarQuarto(Quarto quarto){
         ValorReserva valor = new ValorReserva(quarto.entrada,quarto.saida,quarto.ID);
         System.out.println("Reserva concluida!!!");
         System.out.println("Usuário: " + nome + " (ID: " + ID + ")");

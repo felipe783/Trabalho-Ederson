@@ -34,10 +34,10 @@ public class SistemaReserva {
                 saida = sc.nextInt();
                 
 
-                QuartoID q1 = new QuartoID(1,"Básica",119.90,entrada,saida);
-                QuartoID q2 = new QuartoID(2, "Média",349.90,entrada,saida);
-                QuartoID q3 = new QuartoID(3, "VIP",689.90,entrada,saida);
-                QuartoID q4 = new QuartoID(4, "Suite VIP",1245.90,entrada,saida);
+                Quarto q1 = new Quarto(1,"Básica",119.90,entrada,saida);
+                Quarto q2 = new Quarto(2, "Média",349.90,entrada,saida);
+                Quarto q3 = new Quarto(3, "VIP",689.90,entrada,saida);
+                Quarto q4 = new Quarto(4, "Suite VIP",1245.90,entrada,saida);
 
                 if(quartoID ==1){
                     usuario.reservarQuarto(q1);
