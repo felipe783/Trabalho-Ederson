@@ -1,6 +1,7 @@
+package QuartosFiltro;
+
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.text.Normalizer;
 
 public class Filtro {
     public static Scanner input = new Scanner(System.in);

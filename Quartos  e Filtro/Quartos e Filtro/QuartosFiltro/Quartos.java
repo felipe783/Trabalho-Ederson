@@ -1,3 +1,5 @@
+package QuartosFiltro;
+
 import java.util.ArrayList;
 
 public class Quartos {
