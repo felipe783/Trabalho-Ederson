@@ -1,5 +1,8 @@
+package Sistema;
+
 import CPF.ValidadorCPF;
 import FormatTelefone.Formatador;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -113,7 +116,7 @@ public class Cadastro {
                 case "3" -> cancelarReservas(input);
                 case "0" -> {
                     sair = true;
-                    GerenciadorDeArquivos.salvarUsuarios(usuarios, ultimoId);
+                    Sistema.GerenciadorDeArquivos.salvarUsuarios(usuarios, ultimoId);
                     System.out.println("Saindo...");
                 }
                 default -> System.out.println("Opção inválida. Tente novamente.");
@@ -177,7 +180,7 @@ public class Cadastro {
     }
 
     // =============================
-    //      Cadastro de Usuário
+    //      Sistema.Cadastro de Usuário
     // =============================
     private static void cadastrarUsuario(Scanner input) {
         System.out.println("\n--- CADASTRO ---");
@@ -191,7 +194,7 @@ public class Cadastro {
             System.out.print("Senha: ");
             String senha = input.nextLine().trim();
             if (senha.isEmpty()) {
-                System.out.println("A senha não pode ser vazia. Cadastro cancelado.");
+                System.out.println("A senha não pode ser vazia. Sistema.Cadastro cancelado.");
                 return;
             }
 
@@ -206,7 +209,7 @@ public class Cadastro {
                     System.out.println("CPF inválido. Tentar novamente? (s/n)");
                     String r = input.nextLine().trim().toLowerCase();
                     if (!r.equals("s") && !r.equals("sim")) {
-                        System.out.println("Cadastro cancelado.");
+                        System.out.println("Sistema.Cadastro cancelado.");
                         return;
                     }
                 }
@@ -224,7 +227,7 @@ public class Cadastro {
                     System.out.println("Telefone inválido. Tentar novamente? (s/n)");
                     String r = input.nextLine().trim().toLowerCase();
                     if (!r.equals("s") && !r.equals("sim")) {
-                        System.out.println("Cadastro cancelado.");
+                        System.out.println("Sistema.Cadastro cancelado.");
                         return;
                     }
                 }
@@ -312,12 +315,23 @@ public class Cadastro {
         return null;
     }
 
-    private static void atualizarUltimoId() {
+    // Métodos auxiliares para a interface gráfica
+    public static List<Usuario> getUsuarios() {
+        return usuarios;
+    }
+
+    public static int getUltimoId() {
+        return ultimoId;
+    }
+
+    public static void setUltimoId(int id) {
+        ultimoId = id;
+    }
+
+    public static void atualizarUltimoId() {
         int maxId = 0;
         for (Usuario u : usuarios) {
-            if (u.getId() > maxId) {
-                maxId = u.getId();
-            }
+            if (u.getId() > maxId) maxId = u.getId();
         }
         ultimoId = maxId;
     }
