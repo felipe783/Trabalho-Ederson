@@ -24,7 +24,7 @@ public class TelaQuarto extends JFrame {
             JPanel card = new JPanel(new BorderLayout());
             // imagem
             ImageIcon icon = new ImageIcon("ImagensQuartos/quarto" + q.getNumero() + ".png"); //Puxa a imagem
-            Image img = icon.getImage().getScaledInstance(500, 400, Image.SCALE_SMOOTH); //Redimensiona ela
+            Image img = icon.getImage().getScaledInstance(200, 150, Image.SCALE_SMOOTH); //Redimensiona ela
             ImageIcon resizedIcon = new ImageIcon(img); //Cria a imagem redimensionada
             JLabel imgLabel = new JLabel(resizedIcon); //Taca ela no JLabel pra add no card
 
@@ -33,7 +33,11 @@ public class TelaQuarto extends JFrame {
             // info (qualidade e preço)
             JPanel info = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 5));
             JLabel qualidade = new JLabel(q.getQualidade());
-            JLabel preco = new JLabel(String.valueOf(q.getPreco()));
+            JLabel preco = new JLabel(q.getPreco());
+
+            //Tamanho dos textos
+            qualidade.setFont(new Font("Arial", Font.BOLD, 15));
+            preco.setFont(new Font("Arial", Font.BOLD, 15));
 
             info.add(qualidade);
             info.add(preco);
