@@ -2,37 +2,27 @@ package Telas_QF;
 
 import QuartosFiltro.*;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.util.ArrayList;
+import java.awt.event.*;
 
-/*
-        listaQuarto.add(new Quartos(101, "Basica", "119.90"));
-        listaQuarto.add(new Quartos(102, "Media", "349.90"));
-        listaQuarto.add(new Quartos(103, "Vip", "689.90"));
-        listaQuarto.add(new Quartos(104, "Suite_Vip", "1245.90"));
-        listaQuarto.add(new Quartos(105, "Basica", "119.90"));
-        listaQuarto.add(new Quartos(201, "Media", "349.90"));
-        listaQuarto.add(new Quartos(202, "Vip", "689.90"));
-        listaQuarto.add(new Quartos(203, "Suite_Vip", "1245.90"));
-        listaQuarto.add(new Quartos(204, "Basica", "119.90"));
-        listaQuarto.add(new Quartos(205, "Media", "349.90"));
- */
 public class TelaFiltro extends JFrame{
     //Qualidade
     private JCheckBox QlBasica = new JCheckBox("Básica");
     private JCheckBox QlMedia = new JCheckBox("Média");
     private JCheckBox QlVip = new JCheckBox("Vip");
-    private JCheckBox QlSuite = new JCheckBox("Suíte Vip");
+    private JCheckBox QlSuite = new JCheckBox("Suíte");
 
     //Preço
     private JCheckBox PrBasica = new JCheckBox("119.90");
     private JCheckBox PrMedia = new JCheckBox("349.90");
     private JCheckBox PrVip = new JCheckBox("689.90");
     private JCheckBox PrSuite = new JCheckBox("1245.90");
+
+    //Faz as listas
+    private ArrayList<String> Qualidade = new ArrayList<>();
+    private ArrayList<String> Preco = new ArrayList<>();
 
     public TelaFiltro(){
         setTitle("Tela Filtro");
@@ -42,65 +32,74 @@ public class TelaFiltro extends JFrame{
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
+
     private void initComponents(){
-        JPanel main = new JPanel(new BorderLayout(8, 8));
-        JPanel center = new JPanel(new GridLayout(1, 2, 16, 16));
+        JButton btSair = new JButton("Sair");
+        JButton btFiltrar = new JButton("Filtro");
 
-        //Qualidade painel
-        JPanel painelQual = new JPanel();
-        painelQual.setBorder(BorderFactory.createTitledBorder("Qualidade"));
-        painelQual.setLayout(new BoxLayout(painelQual, BoxLayout.Y_AXIS));
-        painelQual.add(QlBasica);
-        painelQual.add(QlMedia);
-        painelQual.add(QlVip);
-        painelQual.add(QlSuite);
+        JPanel painelPrincipal = new JPanel();
+        JFrame frame = new JFrame();
+        frame.setTitle("Filtro");
 
-        // Painel Preço
-        JPanel painelPreco = new JPanel();
-        painelPreco.setBorder(BorderFactory.createTitledBorder("Preço (R$)"));
-        painelPreco.setLayout(new BoxLayout(painelPreco, BoxLayout.Y_AXIS));
-        painelPreco.add(PrBasica);
-        painelPreco.add(PrMedia);
-        painelPreco.add(PrVip);
-        painelPreco.add(PrSuite);
+        painelPrincipal.setSize(400,300);
+        painelPrincipal.setLayout(new BorderLayout());
 
-        center.add(painelQual);
-        center.add(painelPreco);
-        JButton botaoFiltrar = new JButton("Filtrar");
-        botaoFiltrar.addActionListener((ActionEvent e) -> {
-            // coleta escolhas marcadas
-            ArrayList<String> selecionados = new ArrayList<>();
+        painelPrincipal.add(btFiltrar);
+        painelPrincipal.add(btSair);
+        /** ------------------------QUALIDADE------------------------  **/
+        JPanel painelQL = new JPanel();
+        painelQL.setBorder(BorderFactory.createTitledBorder("Qualidade")); //Cria o painel qualidade com borda e tudo
+        painelQL.setLayout(new BoxLayout(painelQL,BoxLayout.Y_AXIS)); //Organiza eles no eixo Y
+        //ADD CHECKBOX
+        painelQL.add(QlBasica);
+        painelQL.add(QlMedia);
+        painelQL.add(QlVip);
+        painelQL.add(QlSuite);
 
-            // Qualidade -> prefixa com "Q:"
-            if (QlBasica.isSelected()) selecionados.add("Q:Básica");
-            if (QlMedia.isSelected())  selecionados.add("Q:Média");
-            if (QlVip.isSelected())    selecionados.add("Q:Vip");
-            if (QlSuite.isSelected())  selecionados.add("Q:Suíte Vip");
-
-            // Preço -> prefixa com "P:"
-            if (PrBasica.isSelected()) selecionados.add("P:119.90");
-            if (PrMedia.isSelected())  selecionados.add("P:349.90");
-            if (PrVip.isSelected())    selecionados.add("P:689.90");
-            if (PrSuite.isSelected())  selecionados.add("P:1245.90");
-
-            // Converte pra array pra manter a assinatura existente
-            String[] escolha = selecionados.toArray(new String[0]);
-
-            // Tipos possíveis (exemplo)
-            String[] tipos = {"Básica", "Média", "Vip", "Suíte Vip",
-                    "119.90", "349.90", "689.90", "1245.90"};
-
-            // Chama a função existente
-            Filtro.Comparar(tipos, escolha);
+        /*----------Seleção dos filtros(Qualidade)----------*/
+        btSair.addActionListener(e -> System.exit(0)); //SAIR
+        btFiltrar.addActionListener(e->{ //QUALIDADE
+            if(QlBasica.isSelected()) Qualidade.add("Básica");
+            if(QlMedia.isSelected()) Qualidade.add("Média");
+            if(QlVip.isSelected()) Qualidade.add("Vip");
+            if(QlSuite.isSelected()) Qualidade.add("Suite");
         });
 
-        JPanel south = new JPanel();
-        south.add(botaoFiltrar);
+        /** ------------------------Preço------------------------  **/
+        JPanel painelPR = new JPanel();
+        painelPR.setBorder(BorderFactory.createTitledBorder("Preço"));
+        painelPR.setLayout(new BoxLayout(painelPR,BoxLayout.Y_AXIS));
 
-        main.add(center, BorderLayout.CENTER);
-        main.add(south, BorderLayout.SOUTH);
+        painelPR.add(PrBasica);
+        painelPR.add(PrMedia);
+        painelPR.add(PrVip);
+        painelPR.add(PrSuite);
 
-        setContentPane(main);
+        /*----------Seleção dos filtros(Preço)----------*/
+        btFiltrar.addActionListener(e->{ //Preço
+            if(PrBasica.isSelected()) Preco.add("199.90");
+            if(PrMedia.isSelected()) Preco.add("349.90");
+            if(PrVip.isSelected()) Preco.add("689.90");
+            if(PrSuite.isSelected()) Preco.add("1245.90");
+        });
+        /*------------------------Filtro------------------------*/
+        Filtro.Comparar(Qualidade,Preco);
+
+        /*--Mostra Filtrar e Sair em baixo um do lado do outro-*/
+        JPanel botoes = new JPanel();
+        botoes.setLayout(new FlowLayout(FlowLayout.CENTER,10,0));
+        botoes.add(btSair);
+        botoes.add(btFiltrar);
+
+        /*--Final pra mostrar tudo-*/
+        JPanel Centro = new JPanel(new GridLayout(1, 2, 16, 16));
+        Centro.add(painelPR);
+        Centro.add(painelQL);
+
+        painelPrincipal.add(botoes, BorderLayout.SOUTH);
+        painelPrincipal.add(Centro, BorderLayout.CENTER);
+
+        this.setContentPane(painelPrincipal);
     }
 }
 
