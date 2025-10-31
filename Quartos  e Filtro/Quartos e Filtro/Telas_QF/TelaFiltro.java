@@ -21,7 +21,7 @@ public class TelaFiltro extends JFrame{
     private JCheckBox PrSuite = new JCheckBox("1245.90");
 
     //Faz as listas
-    private ArrayList<String> Qualidade = new ArrayList<>();
+    private ArrayList<String> Escolha = new ArrayList<>();
     private ArrayList<String> Preco = new ArrayList<>();
 
     public TelaFiltro(){
@@ -46,6 +46,8 @@ public class TelaFiltro extends JFrame{
 
         painelPrincipal.add(btFiltrar);
         painelPrincipal.add(btSair);
+
+
         /** ------------------------QUALIDADE------------------------  **/
         JPanel painelQL = new JPanel();
         painelQL.setBorder(BorderFactory.createTitledBorder("Qualidade")); //Cria o painel qualidade com borda e tudo
@@ -56,15 +58,6 @@ public class TelaFiltro extends JFrame{
         painelQL.add(QlVip);
         painelQL.add(QlSuite);
 
-        /*----------Seleção dos filtros(Qualidade)----------*/
-        btSair.addActionListener(e -> System.exit(0)); //SAIR
-        btFiltrar.addActionListener(e->{ //QUALIDADE
-            if(QlBasica.isSelected()) Qualidade.add("Básica");
-            if(QlMedia.isSelected()) Qualidade.add("Média");
-            if(QlVip.isSelected()) Qualidade.add("Vip");
-            if(QlSuite.isSelected()) Qualidade.add("Suite");
-        });
-
         /** ------------------------Preço------------------------  **/
         JPanel painelPR = new JPanel();
         painelPR.setBorder(BorderFactory.createTitledBorder("Preço"));
@@ -74,16 +67,29 @@ public class TelaFiltro extends JFrame{
         painelPR.add(PrMedia);
         painelPR.add(PrVip);
         painelPR.add(PrSuite);
+        /**==============================Filtro==============================**/
+        /*----------Seleção dos filtros(Qualidade)----------*/
+        btSair.addActionListener(e -> System.exit(0)); //SAIR
 
-        /*----------Seleção dos filtros(Preço)----------*/
-        btFiltrar.addActionListener(e->{ //Preço
-            if(PrBasica.isSelected()) Preco.add("199.90");
-            if(PrMedia.isSelected()) Preco.add("349.90");
-            if(PrVip.isSelected()) Preco.add("689.90");
-            if(PrSuite.isSelected()) Preco.add("1245.90");
+        btFiltrar.addActionListener(e->{
+            Escolha.clear();
+            //QUALIDADE
+            if(QlBasica.isSelected()) Escolha.add("Básica");
+            if(QlMedia.isSelected()) Escolha.add("Média");
+            if(QlVip.isSelected()) Escolha.add("Vip");
+            if(QlSuite.isSelected()) Escolha.add("Suíte");
+
+
+            //Preço
+            if(PrBasica.isSelected()) Escolha.add("199.90");
+            if(PrMedia.isSelected()) Escolha.add("349.90");
+            if(PrVip.isSelected()) Escolha.add("689.90");
+            if(PrSuite.isSelected()) Escolha.add("1245.90");
+
+            /**Aqui filtra realmente**/
+            System.out.print(Escolha);
+            Filtro.Comparar(Escolha);
         });
-        /*------------------------Filtro------------------------*/
-        Filtro.Comparar(Qualidade,Preco);
 
         /*--Mostra Filtrar e Sair em baixo um do lado do outro-*/
         JPanel botoes = new JPanel();

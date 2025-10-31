@@ -54,16 +54,16 @@ public class Quartos {
 
     public static ArrayList<Quartos> sampleList(){
         ArrayList<Quartos> listaQuarto= new ArrayList<>();
-        listaQuarto.add(new Quartos(101, "Basica", "119.90"));
-        listaQuarto.add(new Quartos(102, "Media", "349.90"));
+        listaQuarto.add(new Quartos(101, "Básica", "119.90"));
+        listaQuarto.add(new Quartos(102, "Média", "349.90"));
         listaQuarto.add(new Quartos(103, "Vip", "689.90"));
-        listaQuarto.add(new Quartos(104, "Suite", "1245.90"));
-        listaQuarto.add(new Quartos(105, "Basica", "119.90"));
-        listaQuarto.add(new Quartos(201, "Media", "349.90"));
+        listaQuarto.add(new Quartos(104, "Suíte", "1245.90"));
+        listaQuarto.add(new Quartos(105, "Básica", "119.90"));
+        listaQuarto.add(new Quartos(201, "Média", "349.90"));
         listaQuarto.add(new Quartos(202, "Vip", "689.90"));
-        listaQuarto.add(new Quartos(203, "Suite", "1245.90"));
-        listaQuarto.add(new Quartos(204, "Basica", "119.90"));
-        listaQuarto.add(new Quartos(205, "Media", "349.90"));
+        listaQuarto.add(new Quartos(203, "Suíte", "1245.90"));
+        listaQuarto.add(new Quartos(204, "Básica", "119.90"));
+        listaQuarto.add(new Quartos(205, "Média", "349.90"));
         return listaQuarto;
     }
 }
