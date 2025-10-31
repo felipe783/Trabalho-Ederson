@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class TelaFiltro extends JFrame{
+    JPanel painelPrincipal = new JPanel();
     //Qualidade
     private JCheckBox QlBasica = new JCheckBox("Básica");
     private JCheckBox QlMedia = new JCheckBox("Média");
@@ -27,7 +28,7 @@ public class TelaFiltro extends JFrame{
     public TelaFiltro(){
         setTitle("Tela Filtro");
         initComponents();
-        //Ajusta o tamanho dos componentes quando ce muda o tamanho da tela
+        painelPrincipal.setPreferredSize(new Dimension(400, 300));//Tamanho do painel
         pack();
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -37,13 +38,9 @@ public class TelaFiltro extends JFrame{
         JButton btSair = new JButton("Sair");
         JButton btFiltrar = new JButton("Filtro");
 
-        JPanel painelPrincipal = new JPanel();
-        JFrame frame = new JFrame();
-        frame.setTitle("Filtro");
-
-        painelPrincipal.setSize(400,300);
+        //JPanel painelPrincipal = new JPanel();
+        //painelPrincipal.setSize(400,300);
         painelPrincipal.setLayout(new BorderLayout());
-
         painelPrincipal.add(btFiltrar);
         painelPrincipal.add(btSair);
 
@@ -87,7 +84,7 @@ public class TelaFiltro extends JFrame{
             if(PrSuite.isSelected()) Escolha.add("1245.90");
 
             /**Aqui filtra realmente**/
-            System.out.print(Escolha);
+            //System.out.println(Escolha);
             Filtro.Comparar(Escolha);
         });
 
