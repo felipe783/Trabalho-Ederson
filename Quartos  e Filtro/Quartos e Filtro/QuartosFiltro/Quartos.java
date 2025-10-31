@@ -20,7 +20,9 @@ public class Quartos {
         this.qualidade=qualidade;
         this.preco=preco;
     }
+
     /**Os getters são pra pegar as variaveis private e poder usar**/
+
     public String getPreco(){
         return preco;
     }
@@ -30,13 +32,15 @@ public class Quartos {
     public String getQualidade(){
         return qualidade;
     }
+
     /**Printa Bunitinho**/
-    @Override
+
+    /*@Override
     public String toString(){
         return numero + qualidade + preco;
-    }
+    }*/
 
-    public static void Exibir(ArrayList<Quartos> listaQuarto){
+    /*public static void Exibir(ArrayList<Quartos> listaQuarto){
         //Os : percorre a lista sem precisar de indice
         System.out.printf("\n--------------------------------------------------\n");
         System.out.printf("%-10s %-10s %-10s", "Numero", "Qualidade", "Preço");
@@ -45,7 +49,9 @@ public class Quartos {
             System.out.printf("\n%-10d %-10s %-10s",quarto.numero,quarto.qualidade,quarto.preco);
         }
         System.out.printf("\n--------------------------------------------------\n");
-    }
+    }*/
+
+
     public static ArrayList<Quartos> sampleList(){
         ArrayList<Quartos> listaQuarto= new ArrayList<>();
         listaQuarto.add(new Quartos(101, "Basica", "119.90"));

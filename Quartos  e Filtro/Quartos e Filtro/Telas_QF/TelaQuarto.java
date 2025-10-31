@@ -1,6 +1,8 @@
 package Telas_QF;
 
 import QuartosFiltro.Quartos;
+import javax.swing.ImageIcon;
+import java.awt.Image;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -21,11 +23,15 @@ public class TelaQuarto extends JFrame {
         for (Quartos q : quartos) {
             JPanel card = new JPanel(new BorderLayout());
             // imagem
-            JLabel img = new JLabel(new ImageIcon("ImagensQuartos/quarto" + q.getNumero() + ".png"));
-            card.add(img, BorderLayout.CENTER);
+            ImageIcon icon = new ImageIcon("ImagensQuartos/quarto" + q.getNumero() + ".png"); //Puxa a imagem
+            Image img = icon.getImage().getScaledInstance(500, 400, Image.SCALE_SMOOTH); //Redimensiona ela
+            ImageIcon resizedIcon = new ImageIcon(img); //Cria a imagem redimensionada
+            JLabel imgLabel = new JLabel(resizedIcon); //Taca ela no JLabel pra add no card
+
+            card.add(imgLabel, BorderLayout.CENTER);
 
             // info (qualidade e preço)
-            JPanel info = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 0));
+            JPanel info = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 5));
             JLabel qualidade = new JLabel(q.getQualidade());
             JLabel preco = new JLabel(String.valueOf(q.getPreco()));
 
@@ -35,11 +41,5 @@ public class TelaQuarto extends JFrame {
 
             add(card);
         }
-
-        setVisible(true); // mostra a janela no final
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new TelaQuarto());
     }
 }
