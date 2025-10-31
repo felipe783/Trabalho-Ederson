@@ -1,3 +1,5 @@
+package QuartosFiltro;
+
 import java.util.ArrayList;
 
 public class Quartos {
@@ -18,7 +20,9 @@ public class Quartos {
         this.qualidade=qualidade;
         this.preco=preco;
     }
+
     /**Os getters são pra pegar as variaveis private e poder usar**/
+
     public String getPreco(){
         return preco;
     }
@@ -28,13 +32,15 @@ public class Quartos {
     public String getQualidade(){
         return qualidade;
     }
+
     /**Printa Bunitinho**/
-    @Override
+
+    /*@Override
     public String toString(){
         return numero + qualidade + preco;
-    }
+    }*/
 
-    public static void Exibir(ArrayList<Quartos> listaQuarto){
+    /*public static void Exibir(ArrayList<Quartos> listaQuarto){
         //Os : percorre a lista sem precisar de indice
         System.out.printf("\n--------------------------------------------------\n");
         System.out.printf("%-10s %-10s %-10s", "Numero", "Qualidade", "Preço");
@@ -43,19 +49,21 @@ public class Quartos {
             System.out.printf("\n%-10d %-10s %-10s",quarto.numero,quarto.qualidade,quarto.preco);
         }
         System.out.printf("\n--------------------------------------------------\n");
-    }
+    }*/
+
+
     public static ArrayList<Quartos> sampleList(){
         ArrayList<Quartos> listaQuarto= new ArrayList<>();
-        listaQuarto.add(new Quartos(101, "Basica", "119.90"));
-        listaQuarto.add(new Quartos(102, "Media", "349.90"));
+        listaQuarto.add(new Quartos(101, "Básica", "119.90"));
+        listaQuarto.add(new Quartos(102, "Média", "349.90"));
         listaQuarto.add(new Quartos(103, "Vip", "689.90"));
-        listaQuarto.add(new Quartos(104, "Suite_Vip", "1245.90"));
-        listaQuarto.add(new Quartos(105, "Basica", "119.90"));
-        listaQuarto.add(new Quartos(201, "Media", "349.90"));
+        listaQuarto.add(new Quartos(104, "Suíte", "1245.90"));
+        listaQuarto.add(new Quartos(105, "Básica", "119.90"));
+        listaQuarto.add(new Quartos(201, "Média", "349.90"));
         listaQuarto.add(new Quartos(202, "Vip", "689.90"));
-        listaQuarto.add(new Quartos(203, "Suite_Vip", "1245.90"));
-        listaQuarto.add(new Quartos(204, "Basica", "119.90"));
-        listaQuarto.add(new Quartos(205, "Media", "349.90"));
+        listaQuarto.add(new Quartos(203, "Suíte", "1245.90"));
+        listaQuarto.add(new Quartos(204, "Básica", "119.90"));
+        listaQuarto.add(new Quartos(205, "Média", "349.90"));
         return listaQuarto;
     }
 }
