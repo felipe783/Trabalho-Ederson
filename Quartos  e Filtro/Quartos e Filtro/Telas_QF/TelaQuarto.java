@@ -13,7 +13,7 @@ public class TelaQuarto extends JFrame {
         // Config da janela
         setTitle("Quartos");
         setSize(1920, 1080);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new GridLayout(0, 2)); // cria 2 por linha
 

@@ -31,18 +31,18 @@ public class TelaFiltro extends JFrame{
         painelPrincipal.setPreferredSize(new Dimension(400, 300));//Tamanho do painel
         pack();
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
 
     private void initComponents(){
-        JButton btSair = new JButton("Sair");
+        //JButton btSair = new JButton("Sair");
         JButton btFiltrar = new JButton("Filtro");
 
         //JPanel painelPrincipal = new JPanel();
         //painelPrincipal.setSize(400,300);
         painelPrincipal.setLayout(new BorderLayout());
         painelPrincipal.add(btFiltrar);
-        painelPrincipal.add(btSair);
+        //painelPrincipal.add(btSair);
 
 
         /** ------------------------QUALIDADE------------------------  **/
@@ -66,7 +66,7 @@ public class TelaFiltro extends JFrame{
         painelPR.add(PrSuite);
         /**==============================Filtro==============================**/
         /*----------Seleção dos filtros(Qualidade)----------*/
-        btSair.addActionListener(e -> System.exit(0)); //SAIR
+        //btSair.addActionListener(e -> System.exit(0)); //SAIR
 
         btFiltrar.addActionListener(e->{
             Escolha.clear();
@@ -91,7 +91,7 @@ public class TelaFiltro extends JFrame{
         /*--Mostra Filtrar e Sair em baixo um do lado do outro-*/
         JPanel botoes = new JPanel();
         botoes.setLayout(new FlowLayout(FlowLayout.CENTER,10,0));
-        botoes.add(btSair);
+        //botoes.add(btSair);
         botoes.add(btFiltrar);
 
         /*--Final pra mostrar tudo-*/
