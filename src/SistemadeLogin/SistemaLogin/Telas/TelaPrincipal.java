@@ -1,5 +1,3 @@
-package Telas;
-
 import javax.swing.*;
 import java.awt.*;
 

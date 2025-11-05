@@ -1,5 +1,3 @@
-package Telas;
-
 import Sistema.Cadastro;
 import Sistema.Usuario;
 import Sistema.GerenciadorDeArquivos;

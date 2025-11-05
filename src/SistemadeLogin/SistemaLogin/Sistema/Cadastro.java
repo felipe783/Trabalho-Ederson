@@ -1,6 +1,4 @@
-package Sistema;
-
-import CPF.ValidadorCPF;
+import ValidadorCPF;
 import FormatTelefone.Formatador;
 
 import java.util.ArrayList;

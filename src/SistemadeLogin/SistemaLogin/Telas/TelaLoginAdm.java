@@ -1,18 +1,12 @@
-package Telas;
-
-import Sistema.Cadastro;
-import Sistema.Usuario;
-
 import javax.swing.*;
 import java.awt.*;
-import java.util.List;
 
-public class TelaLoginSite extends JFrame {
+public class TelaLoginAdm extends JFrame {
     private JTextField campoUsuario;
     private JPasswordField campoSenha;
 
-    public TelaLoginSite() {
-        setTitle("Login do Usuário");
+    public TelaLoginAdm() {
+        setTitle("Login do Administrador");
         setSize(300, 200);
         setLocationRelativeTo(null);
         setLayout(new GridLayout(3, 2, 10, 10));
@@ -22,7 +16,7 @@ public class TelaLoginSite extends JFrame {
         JButton btnEntrar = new JButton("Entrar");
         JButton btnCancelar = new JButton("Cancelar");
 
-        add(new JLabel("Usuário:"));
+        add(new JLabel("Usuário ADM:"));
         add(campoUsuario);
         add(new JLabel("Senha:"));
         add(campoSenha);
@@ -34,18 +28,15 @@ public class TelaLoginSite extends JFrame {
     }
 
     private void autenticar() {
-        String nome = campoUsuario.getText().trim();
-        String senha = new String(campoSenha.getPassword());
+        String user = campoUsuario.getText().trim();
+        String pass = new String(campoSenha.getPassword());
 
-        List<Usuario> usuarios = Cadastro.getUsuarios();
-        boolean autenticado = usuarios.stream()
-                .anyMatch(u -> u.getNome().equalsIgnoreCase(nome) && u.getSenha().equals(senha));
-
-        if (autenticado) {
-            JOptionPane.showMessageDialog(this, "Bem-vindo(a), " + nome + "!");
+        if (user.equals("admin") && pass.equals("1234")) {
+            JOptionPane.showMessageDialog(this, "Login do administrador bem-sucedido!");
+            new TelaListaUsuarios().setVisible(true);
             dispose();
         } else {
-            JOptionPane.showMessageDialog(this, "Usuário ou senha incorretos.");
+            JOptionPane.showMessageDialog(this, "Usuário ou senha inválidos!");
         }
     }
 }

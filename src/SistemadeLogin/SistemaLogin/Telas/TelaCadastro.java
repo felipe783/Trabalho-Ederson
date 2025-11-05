@@ -1,6 +1,4 @@
-package Telas;
-
-import CPF.ValidadorCPF;
+import ValidadorCPF;
 import FormatTelefone.Formatador;
 import Sistema.Cadastro;
 import Sistema.Usuario;
