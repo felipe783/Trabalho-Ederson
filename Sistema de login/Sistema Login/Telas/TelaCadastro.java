@@ -5,6 +5,7 @@ import FormatTelefone.Formatador;
 import Sistema.Cadastro;
 import Sistema.Usuario;
 import Sistema.GerenciadorDeArquivos;
+import Sistema.ValidadorException;
 
 import javax.swing.*;
 import java.awt.*;
@@ -57,6 +58,9 @@ public class TelaCadastro extends JFrame {
             String telefone = campoTelefone.getText().trim();
             String endereco = campoEndereco.getText().trim();
 
+            // Verifica se os campos preenchidos estão validos, caso contrario imprime todos os erros
+            ValidadorException.validarCampos(nome, email, senha, cpf, telefone, endereco);
+
             if (!ValidadorCPF.isValidCPF(cpf)) {
                 JOptionPane.showMessageDialog(this, "CPF inválido!");
                 return;
@@ -75,8 +79,10 @@ public class TelaCadastro extends JFrame {
             JOptionPane.showMessageDialog(this, "Usuário cadastrado com sucesso!");
             dispose();
 
+        } catch (IllegalArgumentException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Erros de validação", JOptionPane.ERROR_MESSAGE);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Erro: " + ex.getMessage());
+            JOptionPane.showMessageDialog(this, "Erro inesperado: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
 }
