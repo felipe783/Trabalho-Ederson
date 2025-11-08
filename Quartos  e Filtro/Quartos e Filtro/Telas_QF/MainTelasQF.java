@@ -21,7 +21,7 @@ public class MainTelasQF extends JFrame {
         add(btQuarto);
         add(btSair);
 
-        btSair.addActionListener(e -> System.exit(0));
+        btSair.addActionListener(e -> dispose());
         btFiltro.addActionListener(e->new TelaFiltro().setVisible(true));
         btQuarto.addActionListener(e->new TelaQuarto().setVisible(true));
     }

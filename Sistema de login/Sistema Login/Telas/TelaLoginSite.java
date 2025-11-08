@@ -2,6 +2,7 @@ package Telas;
 
 import Sistema.Cadastro;
 import Sistema.Usuario;
+import Telas_QF.MainTelasQF;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,6 +16,7 @@ public class TelaLoginSite extends JFrame {
         setTitle("Login do Usuário");
         setSize(300, 200);
         setLocationRelativeTo(null);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLayout(new GridLayout(3, 2, 10, 10));
 
         campoUsuario = new JTextField();
@@ -29,6 +31,7 @@ public class TelaLoginSite extends JFrame {
         add(btnEntrar);
         add(btnCancelar);
 
+        // Botões
         btnEntrar.addActionListener(e -> autenticar());
         btnCancelar.addActionListener(e -> dispose());
     }
@@ -43,7 +46,8 @@ public class TelaLoginSite extends JFrame {
 
         if (autenticado) {
             JOptionPane.showMessageDialog(this, "Bem-vindo(a), " + nome + "!");
-            dispose();
+            dispose(); // Fecha a tela de login
+            new MainTelasQF().setVisible(true); // Abre a tela dos quartos
         } else {
             JOptionPane.showMessageDialog(this, "Usuário ou senha incorretos.");
         }

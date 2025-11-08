@@ -1,45 +1,57 @@
 package Telas_QF;
 
 import QuartosFiltro.Quartos;
-import javax.swing.ImageIcon;
-import java.awt.Image;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
 public class TelaQuarto extends JFrame {
 
-    public TelaQuarto(){
+    public TelaQuarto() {
         // Config da janela
         setTitle("Quartos");
         setSize(1920, 1080);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE); // Fecha apenas esta tela
         setLocationRelativeTo(null);
-        setLayout(new GridLayout(0, 2)); // cria 2 por linha
+        setLayout(new BorderLayout());
+
+        // Painel principal com grade de cards
+        JPanel painelCards = new JPanel(new GridLayout(0, 2, 20, 20)); // 2 colunas, espaçamento
+        JScrollPane scroll = new JScrollPane(painelCards);
+        scroll.getVerticalScrollBar().setUnitIncrement(16); // rolagem mais suave
+        add(scroll, BorderLayout.CENTER);
+
+        // Botão de saída no topo
+        JButton btSair = new JButton("Voltar");
+        JPanel painelTopo = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        painelTopo.add(btSair);
+        add(painelTopo, BorderLayout.NORTH);
 
         // Puxar os quartos
         ArrayList<Quartos> quartos = Quartos.sampleList();
 
         for (Quartos q : quartos) {
             JPanel card = new JPanel(new BorderLayout());
-            // imagem
-            ImageIcon icon = new ImageIcon("ImagensQuartos/quarto" + q.getNumero() + ".png"); //Puxa a imagem
-            Image img = icon.getImage().getScaledInstance(500, 400, Image.SCALE_SMOOTH); //Redimensiona ela
-            ImageIcon resizedIcon = new ImageIcon(img); //Cria a imagem redimensionada
-            JLabel imgLabel = new JLabel(resizedIcon); //Taca ela no JLabel pra add no card
+            card.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2, true));
 
+            // imagem
+            ImageIcon icon = new ImageIcon("ImagensQuartos/quarto" + q.getNumero() + ".png");
+            Image img = icon.getImage().getScaledInstance(500, 400, Image.SCALE_SMOOTH);
+            JLabel imgLabel = new JLabel(new ImageIcon(img));
             card.add(imgLabel, BorderLayout.CENTER);
 
             // info (qualidade e preço)
-            JPanel info = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 5));
-            JLabel qualidade = new JLabel(q.getQualidade());
-            JLabel preco = new JLabel(String.valueOf(q.getPreco()));
-
+            JPanel info = new JPanel(new GridLayout(2, 1));
+            JLabel qualidade = new JLabel("Qualidade: " + q.getQualidade(), SwingConstants.CENTER);
+            JLabel preco = new JLabel("Preço: R$ " + q.getPreco(), SwingConstants.CENTER);
             info.add(qualidade);
             info.add(preco);
             card.add(info, BorderLayout.SOUTH);
 
-            add(card);
+            painelCards.add(card);
         }
+
+        // Ação do botão sair
+        btSair.addActionListener(e -> dispose()); // fecha esta tela
     }
 }

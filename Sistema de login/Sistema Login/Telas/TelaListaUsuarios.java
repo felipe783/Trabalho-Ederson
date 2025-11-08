@@ -53,6 +53,7 @@ public class TelaListaUsuarios extends JFrame {
             int id = (int) modelo.getValueAt(linha, 0);
             List<Usuario> usuarios = Cadastro.getUsuarios();
             usuarios.removeIf(u -> u.getId() == id);
+            Cadastro.reordenarIds();
             Cadastro.atualizarUltimoId();
             GerenciadorDeArquivos.salvarUsuarios(usuarios, Cadastro.getUltimoId());
             carregarUsuarios();

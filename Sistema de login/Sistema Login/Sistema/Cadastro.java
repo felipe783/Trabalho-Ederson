@@ -300,6 +300,7 @@ public class Cadastro {
             usuarios.remove(u);
             System.out.println("Usuário com ID " + id + " removido.");
 
+            reordenarIds();
             atualizarUltimoId();
             GerenciadorDeArquivos.salvarUsuarios(usuarios, ultimoId);
 
@@ -334,5 +335,12 @@ public class Cadastro {
             if (u.getId() > maxId) maxId = u.getId();
         }
         ultimoId = maxId;
+    }
+
+    public static void reordenarIds() {
+        for (int i = 0; i < usuarios.size(); i++) {
+            usuarios.get(i).setId(i + 1); // IDs voltam a ficar 1,2,3,4...
+        }
+        System.out.println("IDs reorganizados com sucesso.");
     }
 }

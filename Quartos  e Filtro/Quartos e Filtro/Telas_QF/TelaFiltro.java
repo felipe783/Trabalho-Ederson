@@ -66,7 +66,7 @@ public class TelaFiltro extends JFrame{
         painelPR.add(PrSuite);
         /**==============================Filtro==============================**/
         /*----------Seleção dos filtros(Qualidade)----------*/
-        btSair.addActionListener(e -> System.exit(0)); //SAIR
+        btSair.addActionListener(e -> dispose()); //SAIR
 
         btFiltrar.addActionListener(e->{
             Escolha.clear();
