@@ -6,12 +6,14 @@ import java.awt.*;
 public class TelaPrincipal extends JFrame {
 
     public TelaPrincipal() {
+        // Style do painel
         setTitle("Sistema de Sistema.Cadastro e Administração");
         setSize(400, 300);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new GridLayout(4, 1, 10, 10));
 
+        // Botões de funções
         JButton btnCadastrar = new JButton("Cadastrar Usuário");
         JButton btnSite = new JButton("Acessar o Site");
         JButton btnAdm = new JButton("Sistema ADM");
