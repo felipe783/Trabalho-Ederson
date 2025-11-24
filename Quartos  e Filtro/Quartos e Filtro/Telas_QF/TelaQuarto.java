@@ -1,9 +1,9 @@
 package Telas_QF;
-
 import QuartosFiltro.Quartos;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import Reserva.TelaCheckout;
 
 public class TelaQuarto extends JFrame {
 
@@ -41,14 +41,33 @@ public class TelaQuarto extends JFrame {
             card.add(imgLabel, BorderLayout.CENTER);
 
             // info (qualidade e preço)
-            JPanel info = new JPanel(new GridLayout(2, 1));
+            JPanel info = new JPanel(new GridLayout(3, 1));
             JLabel qualidade = new JLabel("Qualidade: " + q.getQualidade(), SwingConstants.CENTER);
             JLabel preco = new JLabel("Preço: R$ " + q.getPreco(), SwingConstants.CENTER);
+
+            // --- NOVO COMPONENTE: BOTÃO DE RESERVA ---
+            JButton btReservar = new JButton("Reservar " + q.getQualidade());
+            btReservar.setBackground(new Color(60, 179, 113)); // Cor verde para destaque
+            btReservar.setForeground(Color.WHITE);
+            btReservar.setFocusPainted(false); // Remove o destaque de foco
+
+            // Ação do botão de reserva (lambda expression)
+            btReservar.addActionListener(e -> {
+                // Ao invés de um JOptionPane, abra a nova tela de checkout
+                TelaCheckout checkout = new TelaCheckout(q);
+                checkout.setVisible(true);
+            });
+
+
             info.add(qualidade);
             info.add(preco);
+            info.add(btReservar);
             card.add(info, BorderLayout.SOUTH);
 
             painelCards.add(card);
+
+
+
         }
 
         // Ação do botão sair

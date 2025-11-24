@@ -32,6 +32,9 @@ public class Quartos {
     public String getQualidade(){
         return qualidade;
     }
+    public double getpreco(){
+        return Double.parseDouble(preco);
+    }
 
     /**Printa Bunitinho**/
 
