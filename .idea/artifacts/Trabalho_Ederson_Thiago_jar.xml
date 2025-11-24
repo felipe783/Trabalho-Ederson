@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" build-on-make="true" name="Trabalho-Ederson-Thiago:jar">
-    <output-path>$PROJECT_DIR$/out/artifacts/Trabalho_Ederson_Thiago_jar</output-path>
-    <root id="archive" name="Trabalho-Ederson-Thiago.jar">
-      <element id="module-output" name="Trabalho-Ederson-Thiago" />
-    </root>
-  </artifact>
-</component>
