@@ -339,7 +339,7 @@ public class Cadastro {
 
     public static void reordenarIds() {
         for (int i = 0; i < usuarios.size(); i++) {
-            usuarios.get(i).setId(i + 1); // IDs voltam a ficar 1,2,3,4...
+            usuarios.get(i).setId(i + 1);
         }
         System.out.println("IDs reorganizados com sucesso.");
     }
