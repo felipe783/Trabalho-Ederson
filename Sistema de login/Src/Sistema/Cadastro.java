@@ -11,7 +11,7 @@ public class Cadastro {
     // =============================
     //    Constantes e atributos
     // =============================
-    private static final List<Usuario> usuarios = new ArrayList<>();
+    public static final List<Usuario> usuarios = new ArrayList<>();
     private static int ultimoId = GerenciadorDeArquivos.carregarUsuarios(usuarios);
 
     private static final String ADM_USER = "admin";
@@ -194,7 +194,7 @@ public class Cadastro {
             System.out.print("Senha: ");
             String senha = input.nextLine().trim();
             if (senha.isEmpty()) {
-                System.out.println("A senha não pode ser vazia. Sistema.Cadastro cancelado.");
+                System.out.println("A senha não pode ser vazia. Cadastro cancelado.");
                 return;
             }
 
@@ -209,7 +209,7 @@ public class Cadastro {
                     System.out.println("CPF inválido. Tentar novamente? (s/n)");
                     String r = input.nextLine().trim().toLowerCase();
                     if (!r.equals("s") && !r.equals("sim")) {
-                        System.out.println("Sistema.Cadastro cancelado.");
+                        System.out.println("Cadastro cancelado.");
                         return;
                     }
                 }
@@ -227,7 +227,7 @@ public class Cadastro {
                     System.out.println("Telefone inválido. Tentar novamente? (s/n)");
                     String r = input.nextLine().trim().toLowerCase();
                     if (!r.equals("s") && !r.equals("sim")) {
-                        System.out.println("Sistema.Cadastro cancelado.");
+                        System.out.println("Cadastro cancelado.");
                         return;
                     }
                 }
@@ -235,6 +235,8 @@ public class Cadastro {
 
             System.out.print("Endereço: ");
             String endereco = input.nextLine().trim();
+
+            ValidadorException.validarCampos(nome, email, senha, cpf, telefone, endereco);
 
             Usuario u = new Usuario(0, nome, email, senha, ValidadorCPF.formatCPF(cpf), telefone, endereco);
             int novoId = ++ultimoId;
@@ -246,7 +248,7 @@ public class Cadastro {
             System.out.println("Usuário cadastrado com sucesso! ID = " + novoId);
 
         } catch (IllegalArgumentException e) {
-            System.out.println("Erro ao cadastrar: " + e.getMessage());
+            System.out.println("\nErro ao cadastrar: " + e.getMessage());
             System.out.println("Voltando ao menu principal...");
         }
     }
