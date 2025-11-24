@@ -71,6 +71,8 @@ public class TelaQuarto extends JFrame {
         }
 
         // Ação do botão sair
-        btSair.addActionListener(e -> dispose()); // fecha esta tela
+        btSair.addActionListener(e ->
+            dispose()
+        ); // fecha esta tela
     }
 }

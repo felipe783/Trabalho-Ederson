@@ -1,5 +1,6 @@
 package Reserva;
 
+import Reserva.GerenciadorReservas;
 import QuartosFiltro.Quartos;
 import javax.swing.*;
 import java.awt.*;
@@ -9,7 +10,10 @@ public class TelaCheckout extends JFrame {
 
     private Quartos quartoSelecionado;
     private JLabel labelPrecoTotal;
-    // Formata o preço para o padrão brasileiro (R$ X.XXX,XX)
+    private JTextField campoDias;
+    private double precoCalculado = 0.0;
+    private int diasSelecionados = 0;
+
     private static final DecimalFormat df = new DecimalFormat("R$ #,##0.00");
 
     public TelaCheckout(Quartos quarto) {
@@ -17,13 +21,13 @@ public class TelaCheckout extends JFrame {
 
         // --- Configuração da Janela ---
         setTitle("Reserva do Quarto: " + quarto.getQualidade());
-        setSize(450, 300);
+        setSize(450, 400); // Aumentei o tamanho
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout(10, 10));
 
         // --- Painel Central de Informações ---
-        JPanel painelInfo = new JPanel(new GridLayout(4, 1, 5, 5));
+        JPanel painelInfo = new JPanel(new GridLayout(5, 1, 10, 10));
         painelInfo.setBorder(BorderFactory.createEmptyBorder(20, 20, 10, 20));
 
         // Título e Preço Diário
@@ -31,53 +35,90 @@ public class TelaCheckout extends JFrame {
         titulo.setFont(new Font("Arial", Font.BOLD, 18));
 
         JLabel labelDiaria = new JLabel("Diária: " + df.format(quarto.getpreco()), SwingConstants.CENTER);
-        labelDiaria.setFont(new Font("Arial", Font.PLAIN, 16));
 
         // Campo para inserir os dias
         JPanel painelDias = new JPanel(new FlowLayout(FlowLayout.CENTER));
         painelDias.add(new JLabel("Quantidade de Dias:"));
-        JTextField campoDias = new JTextField(5);
+        campoDias = new JTextField(5);
         painelDias.add(campoDias);
 
-        // --- Cálculo e Botão ---
+        // --- Botões e Labels ---
         JButton btCalcular = new JButton("Calcular Preço Total");
         labelPrecoTotal = new JLabel("Total: R$ 0,00", SwingConstants.CENTER);
-        labelPrecoTotal.setFont(new Font("Arial", Font.BOLD, 16));
+        labelPrecoTotal.setFont(new Font("Arial", Font.BOLD, 18));
+
+        JButton btConfirmar = new JButton("Confirmar Reserva");
+        btConfirmar.setEnabled(false); // Inicia desabilitado
 
         // Ação do botão de cálculo
-        btCalcular.addActionListener(e -> calcularPreco(campoDias.getText()));
+        btCalcular.addActionListener(e -> {
+            calcularPreco();
+            // Habilita o botão de confirmação se o cálculo for válido
+            btConfirmar.setEnabled(precoCalculado > 0);
+        });
 
-        // Adicionando componentes ao painel de informações
+        // Ação do botão de confirmação
+        btConfirmar.addActionListener(e -> confirmarReserva());
+
+        // Adicionando componentes
         painelInfo.add(titulo);
         painelInfo.add(labelDiaria);
         painelInfo.add(painelDias);
         painelInfo.add(btCalcular);
+        painelInfo.add(labelPrecoTotal);
 
         add(painelInfo, BorderLayout.CENTER);
-        add(labelPrecoTotal, BorderLayout.SOUTH);
+
+        JPanel painelConfirmar = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        painelConfirmar.add(btConfirmar);
+        add(painelConfirmar, BorderLayout.SOUTH);
     }
 
-    private void calcularPreco(String diasTexto) {
+    private void calcularPreco() {
         try {
-            // 1. Converte o texto para um número inteiro
-            int dias = Integer.parseInt(diasTexto);
+            diasSelecionados = Integer.parseInt(campoDias.getText());
 
-            if (dias <= 0) {
+            if (diasSelecionados <= 0) {
                 JOptionPane.showMessageDialog(this, "A quantidade de dias deve ser maior que zero.", "Erro", JOptionPane.ERROR_MESSAGE);
-                labelPrecoTotal.setText("Total: R$ 0,00");
-                return;
+                precoCalculado = 0.0;
+            } else {
+                precoCalculado = quartoSelecionado.getpreco() * diasSelecionados;
             }
-
-            // 2. Cálculo: Preço por dia * Quantidade de dias
-            double precoDiario = Double.parseDouble(quartoSelecionado.getPreco());
-            double precoTotal = precoDiario * dias;
-
-            // 3. Atualiza o JLabel com o resultado
-            labelPrecoTotal.setText("Total da Reserva (" + dias + " dias): " + df.format(precoTotal));
 
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Por favor, insira um número válido de dias.", "Erro de Entrada", JOptionPane.ERROR_MESSAGE);
-            labelPrecoTotal.setText("Total: R$ 0,00");
+            precoCalculado = 0.0;
+            diasSelecionados = 0;
+        }
+
+        labelPrecoTotal.setText("Total da Reserva (" + diasSelecionados + " dias): " + df.format(precoCalculado));
+    }
+
+    private void confirmarReserva() {
+        if (precoCalculado > 0) {
+
+            // Tenta registrar a reserva
+            boolean sucesso = GerenciadorReservas.registrarReserva(
+                    quartoSelecionado.getNumero(),
+                    precoCalculado,
+                    diasSelecionados
+            );
+
+            if (sucesso) {
+                JOptionPane.showMessageDialog(this,
+                        "Reserva Confirmada!\nVocê pode consultar os detalhes no menu principal.",
+                        "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                dispose(); // Fecha a tela de checkout
+            } else {
+                // Mensagem de erro se o usuário já tiver uma reserva
+                JOptionPane.showMessageDialog(this,
+                        "ERRO: Você já possui uma reserva ativa. Cancele a reserva anterior antes de fazer uma nova.",
+                        "Limite de Reserva Atingido", JOptionPane.ERROR_MESSAGE);
+                // Não fecha a tela
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Calcule o preço antes de confirmar.", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

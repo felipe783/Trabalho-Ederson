@@ -1,5 +1,5 @@
 package Telas;
-
+import Reserva.TelaReserva;
 import Sistema.Cadastro;
 import Sistema.Usuario;
 import Telas_QF.MainTelasQF;
@@ -47,7 +47,7 @@ public class TelaLoginSite extends JFrame {
         if (autenticado) {
             JOptionPane.showMessageDialog(this, "Bem-vindo(a), " + nome + "!");
             dispose(); // Fecha a tela de login
-            new MainTelasQF().setVisible(true); // Abre a tela dos quartos
+            new TelaReserva().setVisible(true); // Abre a tela dos quartos
         } else {
             JOptionPane.showMessageDialog(this, "Usuário ou senha incorretos.");
         }
